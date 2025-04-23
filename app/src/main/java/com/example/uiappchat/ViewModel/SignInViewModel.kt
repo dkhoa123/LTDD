@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.uiappchat.Model.InfoUser
 import com.example.uiappchat.Model.SignInUiState
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -64,12 +66,14 @@ class SignInViewModel:ViewModel() {
                     )
                 }
             } catch (e: Exception) {
+                val errorMsg = "Tài khoản hoặc mật khẩu sai. Hãy thử lại!"
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
-                    errorMessage = e.localizedMessage ?: "Đăng nhập thất bại!"
+                    errorMessage = errorMsg
                 )
-                Toast.makeText(context, e.localizedMessage, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()
             }
+
         }
 //        Crane, a travel app by Google, is a great example of Jetpack Compose MVVM implementation. It uses ViewModels to manage UI state and business logic, separating them from composables. You can explore its source code for practical insights: https://github.com/android/compose-samples/tree/main/Crane
     }
