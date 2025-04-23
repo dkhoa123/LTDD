@@ -24,6 +24,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -53,7 +55,7 @@ fun Info_layout(navController: NavController) {
     var lastName by rememberSaveable { mutableStateOf("") }
     var age by rememberSaveable { mutableStateOf("") }
     var address by rememberSaveable { mutableStateOf("") }
-    var sex by rememberSaveable { mutableStateOf("") }
+    var sex by rememberSaveable { mutableStateOf("Nam") }
     var email by rememberSaveable { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
@@ -183,17 +185,32 @@ fun Info_layout(navController: NavController) {
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            OutlinedTextField(
-                value = sex,
-                onValueChange = { sex = it },
-                label = { Text("Sex") },
-                singleLine = true,
-                shape = RoundedCornerShape(20.dp),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    containerColor = Color.White
-                ),
-                modifier = Modifier.fillMaxWidth(0.9f)
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth(0.9f)
+                    .padding(vertical = 8.dp)
+            ) {
+                Text(text = "Sex", fontSize = 16.sp, fontWeight = FontWeight.Medium)
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(top = 8.dp)
+                ) {
+                    RadioButton(
+                        selected = sex == "Nam",
+                        onClick = { sex = "Nam" },
+                        colors = RadioButtonDefaults.colors(selectedColor = Color(0xFF023E8A))
+                    )
+                    Text(text = "Nam", modifier = Modifier.padding(end = 24.dp))
+
+                    RadioButton(
+                        selected = sex == "Nữ",
+                        onClick = { sex = "Nữ" },
+                        colors = RadioButtonDefaults.colors(selectedColor = Color(0xFF023E8A))
+                    )
+                    Text(text = "Nữ")
+                }
+            }
 
             Spacer(modifier = Modifier.height(12.dp))
 
